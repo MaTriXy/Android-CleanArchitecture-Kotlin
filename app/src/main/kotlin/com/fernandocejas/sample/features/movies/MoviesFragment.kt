@@ -3,8 +3,8 @@ package com.fernandocejas.sample.features.movies
 import com.fernandocejas.sample.BaseFragment
 import com.fernandocejas.sample.R
 
-class LoginFragment : BaseFragment() {
+class MoviesFragment : BaseFragment() {
     override fun layoutId(): Int {
-        return R.layout.fragment_login
+        return R.layout.fragment_movies
     }
 }
