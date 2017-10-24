@@ -1,10 +1,8 @@
-package com.fernandocejas.sample.features.movies
+package com.fernandocejas.sample.features.login
 
 import com.fernandocejas.sample.BaseFragment
 import com.fernandocejas.sample.R
 
 class LoginFragment : BaseFragment() {
-    override fun layoutId(): Int {
-        return R.layout.fragment_login
-    }
+    override fun layoutId() = R.layout.fragment_login
 }

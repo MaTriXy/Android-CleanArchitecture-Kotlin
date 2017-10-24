@@ -1,12 +1,9 @@
-package com.fernandocejas.sample.framework
+package com.fernandocejas.sample
 
 import android.app.Application
 import android.content.Context
-import com.fernandocejas.sample.BuildConfig
 import org.junit.Rule
-import org.junit.rules.TestRule
 import org.junit.runner.RunWith
-import org.mockito.MockitoAnnotations
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
 import org.robolectric.annotation.Config
@@ -22,15 +19,10 @@ import org.robolectric.annotation.Config
         sdk = intArrayOf(21))
 abstract class AndroidTest {
 
-    @Rule @JvmField
-    val injectMocks = TestRule { statement, description ->
-        MockitoAnnotations.initMocks(this)
-        statement
-    }
+    @Suppress("LeakingThis")
+    @Rule @JvmField val injectMocks = InjectMocksRule.create(this@AndroidTest)
 
-    fun context(): Context {
-        return RuntimeEnvironment.application
-    }
+    fun context(): Context = RuntimeEnvironment.application
 
     internal class ApplicationStub : Application()
 }

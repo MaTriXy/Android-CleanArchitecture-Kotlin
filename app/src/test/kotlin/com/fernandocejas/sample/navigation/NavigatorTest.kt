@@ -1,10 +1,10 @@
-package com.fernandocejas.sample
+package com.fernandocejas.sample.navigation
 
+import com.fernandocejas.sample.AndroidTest
 import com.fernandocejas.sample.features.login.Authenticator
-import com.fernandocejas.sample.features.movies.LoginActivity
+import com.fernandocejas.sample.features.login.LoginActivity
 import com.fernandocejas.sample.features.movies.MoviesActivity
-import com.fernandocejas.sample.framework.AndroidTest
-import com.fernandocejas.sample.framework.shouldNavigateTo
+import com.fernandocejas.sample.shouldNavigateTo
 import com.nhaarman.mockito_kotlin.whenever
 import org.junit.Before
 import org.junit.Test
@@ -13,30 +13,28 @@ import org.mockito.Mockito.verify
 
 
 class NavigatorTest : AndroidTest() {
-    lateinit var navigator: Navigator
 
-    @Mock lateinit var authenticator: Authenticator
+    private lateinit var navigator: Navigator
 
-    @Before
-    fun setup() {
+    @Mock private lateinit var authenticator: Authenticator
+
+    @Before fun setup() {
         navigator = Navigator(authenticator)
     }
 
-    @Test
-    fun forwardUserToLoginScreen() {
+    @Test fun `should forward user to login screen`() {
         whenever(authenticator.userLoggedIn()).thenReturn(false)
 
-        navigator.showMainScreen(context())
+        navigator.showMain(context())
 
         verify(authenticator).userLoggedIn()
         RouteActivity::class shouldNavigateTo LoginActivity::class
     }
 
-    @Test
-    fun forwardUserToMoviesScreen() {
+    @Test fun `should forward user to movies screen`() {
         whenever(authenticator.userLoggedIn()).thenReturn(true)
 
-        navigator.showMainScreen(context())
+        navigator.showMain(context())
 
         verify(authenticator).userLoggedIn()
         RouteActivity::class shouldNavigateTo MoviesActivity::class

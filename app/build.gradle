@@ -78,12 +78,17 @@ dependencies {
   //Application dependencies
   compile applicationDependencies.kotlin
   compile applicationDependencies.appCompat
+  compile applicationDependencies.cardView
+  compile applicationDependencies.recyclerView
+  compile applicationDependencies.design
   compile applicationDependencies.androidAnnotations
+  compile applicationDependencies.glide
   compile applicationDependencies.dagger
   compile applicationDependencies.rxJava
   compile applicationDependencies.rxAndroid
   compile applicationDependencies.retrofit
   compile applicationDependencies.retrofitAdapter
+  compile applicationDependencies.okhttpLoggingInterceptor
 
   //Unit/Integration tests dependencies
   testCompile unitTestDependencies.kotlin
