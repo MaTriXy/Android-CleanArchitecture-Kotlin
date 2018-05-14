@@ -1,45 +1,38 @@
+/**
+ * Copyright (C) 2018 Fernando Cejas Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.fernandocejas.sample.features.movies
 
-import android.content.ActivityNotFoundException
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import com.fernandocejas.sample.features.movies.PlayMovie.Params
-import com.fernandocejas.sample.framework.extension.empty
-import com.fernandocejas.sample.framework.interactor.UseCase
-import io.reactivex.Completable
+import com.fernandocejas.sample.core.exception.Failure
+import com.fernandocejas.sample.core.functional.Either
+import com.fernandocejas.sample.core.functional.Either.Right
+import com.fernandocejas.sample.core.interactor.UseCase
+import com.fernandocejas.sample.core.interactor.UseCase.None
+import com.fernandocejas.sample.core.navigation.Navigator
 import javax.inject.Inject
 
-
 class PlayMovie
-@Inject constructor() : UseCase.RxCompletable<Params>() {
+@Inject constructor(private val context: Context,
+                    private val navigator: Navigator) : UseCase<None, Params>() {
 
-    private val VIDEO_URL_HTTP = "http://www.youtube.com/watch?v="
-    private val VIDEO_URL_HTTPS = "https://www.youtube.com/watch?v="
-
-    override fun build(params: Params?): Completable =
-        Completable.fromAction { watchVideoFromUrl(params!!.context, params.url) }
-
-    private fun watchVideoFromUrl(context: Context, videoUrl: String) {
-        try {
-            context.startActivity(createYoutubeIntent(videoUrl))
-        } catch (ex: ActivityNotFoundException) {
-            context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(videoUrl)))
-        }
+    override suspend fun run(params: Params): Either<Failure, None> {
+        navigator.openVideo(context, params.url)
+        return Right(None())
     }
 
-    private fun createYoutubeIntent(videoUrl: String): Intent {
-        val videoId = when {
-            videoUrl.startsWith(VIDEO_URL_HTTP) -> videoUrl.replace(VIDEO_URL_HTTP, String.empty())
-            videoUrl.startsWith(VIDEO_URL_HTTPS) -> videoUrl.replace(VIDEO_URL_HTTPS, String.empty())
-            else -> videoUrl
-        }
-
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:$videoId"))
-        intent.putExtra("force_fullscreen", true)
-
-        return intent
-    }
-
-    data class Params(val context: Context, val url: String)
+    data class Params(val url: String)
 }

@@ -1,34 +1,35 @@
+/**
+ * Copyright (C) 2018 Fernando Cejas Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.fernandocejas.sample.features.movies
 
-import com.fernandocejas.sample.framework.extension.empty
+import com.fernandocejas.sample.core.extension.empty
 
-class MovieDetails
-private constructor(val id: Int,
-                    val title: String,
-                    val poster: String,
-                    val summary: String,
-                    val cast: String,
-                    val director: String,
-                    val year: Int,
-                    val trailer: String) {
+data class MovieDetails(val id: Int,
+                        val title: String,
+                        val poster: String,
+                        val summary: String,
+                        val cast: String,
+                        val director: String,
+                        val year: Int,
+                        val trailer: String) {
 
-    private constructor(builder: Builder) : this(builder.id, builder.title, builder.poster,
-            builder.summary, builder.cast, builder.director, builder.year, builder.trailer)
-
-    companion object { fun create(init: Builder.() -> Unit) = Builder(init).build() }
-
-    class Builder private constructor() {
-        constructor(init: Builder.() -> Unit) : this() { init() }
-
-        var id = 0
-        var title = String.empty()
-        var poster = String.empty()
-        var summary = String.empty()
-        var cast = String.empty()
-        var director = String.empty()
-        var year = 0
-        var trailer = String.empty()
-
-        fun build() = MovieDetails(this)
+    companion object {
+        fun empty() = MovieDetails(0, String.empty(), String.empty(), String.empty(),
+                String.empty(), String.empty(), 0, String.empty())
     }
 }
+
+
