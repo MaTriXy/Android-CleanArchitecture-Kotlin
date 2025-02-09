@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2018 Fernando Cejas Open Source Project
+ * Copyright (C) 2020 Fernando Cejas Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,6 @@
 package com.fernandocejas.sample
 
 import org.junit.Rule
-import org.junit.runner.RunWith
-import org.mockito.junit.MockitoJUnitRunner
 
 /**
  * Base class for Unit tests. Inherit from it to create test cases which DO NOT contain android
@@ -25,9 +23,7 @@ import org.mockito.junit.MockitoJUnitRunner
  *
  * @see AndroidTest
  */
-@RunWith(MockitoJUnitRunner::class)
 abstract class UnitTest {
 
-    @Suppress("LeakingThis")
-    @Rule @JvmField val injectMocks = InjectMocksRule.create(this@UnitTest)
+    fun fail(message: String): Nothing = throw AssertionError(message)
 }

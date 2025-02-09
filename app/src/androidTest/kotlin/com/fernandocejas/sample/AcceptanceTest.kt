@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2018 Fernando Cejas Open Source Project
+ * Copyright (C) 2020 Fernando Cejas Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,10 +16,10 @@
 package com.fernandocejas.sample
 
 import android.app.Activity
-import android.support.test.espresso.intent.rule.IntentsTestRule
-import android.support.test.filters.LargeTest
-import android.support.test.rule.ActivityTestRule
-import android.support.test.runner.AndroidJUnit4
+import androidx.test.espresso.intent.rule.IntentsTestRule
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.filters.LargeTest
+import androidx.test.rule.ActivityTestRule
 import org.junit.Rule
 import org.junit.runner.RunWith
 

@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2018 Fernando Cejas Open Source Project
+ * Copyright (C) 2020 Fernando Cejas Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,45 +19,41 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.support.v4.app.ActivityOptionsCompat
-import android.support.v4.app.FragmentActivity
 import android.view.View
-import android.widget.ImageView
-import com.fernandocejas.sample.features.login.Authenticator
-import com.fernandocejas.sample.features.login.LoginActivity
-import com.fernandocejas.sample.features.movies.MovieDetailsActivity
-import com.fernandocejas.sample.features.movies.MovieView
-import com.fernandocejas.sample.features.movies.MoviesActivity
-import com.fernandocejas.sample.core.extension.empty
-import javax.inject.Inject
-import javax.inject.Singleton
+import androidx.fragment.app.FragmentActivity
+import com.fernandocejas.sample.core.extension.emptyString
+import com.fernandocejas.sample.features.auth.credentials.Authenticator
+import com.fernandocejas.sample.features.movies.ui.MovieView
+import com.fernandocejas.sample.features.movies.ui.MoviesActivity
 
 
-@Singleton
-class Navigator
-@Inject constructor(private val authenticator: Authenticator) {
+class Navigator(private val authenticator: Authenticator) {
 
-    private fun showLogin(context: Context) = context.startActivity(LoginActivity.callingIntent(context))
+//    private fun showLogin(context: Context) =
+//        context.startActivity(LoginActivity.callingIntent(context))
 
     fun showMain(context: Context) {
-        when (authenticator.userLoggedIn()) {
-            true -> showMovies(context)
-            false -> showLogin(context)
-        }
+//        TODO()
+        showMovies(context)
+//        when (authenticator.userLoggedIn()) {
+//            true -> showMovies(context)
+//            false -> showLogin(context)
+//        }
     }
 
-    private fun showMovies(context: Context) = context.startActivity(MoviesActivity.callingIntent(context))
+    private fun showMovies(context: Context) =
+        context.startActivity(MoviesActivity.callingIntent(context))
 
     fun showMovieDetails(activity: FragmentActivity, movie: MovieView, navigationExtras: Extras) {
-        val intent = MovieDetailsActivity.callingIntent(activity, movie)
-        val sharedView = navigationExtras.transitionSharedElement as ImageView
-        val activityOptions = ActivityOptionsCompat
-                .makeSceneTransitionAnimation(activity, sharedView, sharedView.transitionName)
-        activity.startActivity(intent, activityOptions.toBundle())
+//        val intent = MovieDetailsActivity.callingIntent(activity, movie)
+//        val sharedView = navigationExtras.transitionSharedElement as ImageView
+//        val activityOptions = ActivityOptionsCompat
+//            .makeSceneTransitionAnimation(activity, sharedView, sharedView.transitionName)
+//        activity.startActivity(intent, activityOptions.toBundle())
     }
 
-    private val VIDEO_URL_HTTP = "http://www.youtube.com/watch?v="
-    private val VIDEO_URL_HTTPS = "https://www.youtube.com/watch?v="
+    private val videoUrlHttp = "http://www.youtube.com/watch?v="
+    private val videoUrlHttps = "https://www.youtube.com/watch?v="
 
     fun openVideo(context: Context, videoUrl: String) {
         try {
@@ -69,16 +65,17 @@ class Navigator
 
     private fun createYoutubeIntent(videoUrl: String): Intent {
         val videoId = when {
-            videoUrl.startsWith(VIDEO_URL_HTTP) -> videoUrl.replace(VIDEO_URL_HTTP, String.empty())
-            videoUrl.startsWith(VIDEO_URL_HTTPS) -> videoUrl.replace(VIDEO_URL_HTTPS, String.empty())
+            videoUrl.startsWith(videoUrlHttp) -> videoUrl.replace(videoUrlHttp, emptyString())
+            videoUrl.startsWith(videoUrlHttps) -> videoUrl.replace(
+                videoUrlHttps,
+                emptyString()
+            )
             else -> videoUrl
         }
 
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:$videoId"))
         intent.putExtra("force_fullscreen", true)
-
-        if (android.os.Build.VERSION.SDK_INT <= android.os.Build.VERSION_CODES.M)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 
         return intent
     }

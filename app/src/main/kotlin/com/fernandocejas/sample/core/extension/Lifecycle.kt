@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2018 Fernando Cejas Open Source Project
+ * Copyright (C) 2020 Fernando Cejas Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,13 +15,13 @@
  */
 package com.fernandocejas.sample.core.extension
 
-import android.arch.lifecycle.LifecycleOwner
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.Observer
-import com.fernandocejas.sample.core.exception.Failure
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
+import com.fernandocejas.sample.core.failure.Failure
 
 fun <T : Any, L : LiveData<T>> LifecycleOwner.observe(liveData: L, body: (T?) -> Unit) =
-        liveData.observe(this, Observer(body))
+    liveData.observe(this, Observer(body))
 
 fun <L : LiveData<Failure>> LifecycleOwner.failure(liveData: L, body: (Failure?) -> Unit) =
-        liveData.observe(this, Observer(body))
+    liveData.observe(this, Observer(body))

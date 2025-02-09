@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2018 Fernando Cejas Open Source Project
+ * Copyright (C) 2020 Fernando Cejas Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,12 +15,7 @@
  */
 package com.fernandocejas.sample.core.platform
 
-import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import com.fernandocejas.sample.R.id
-import com.fernandocejas.sample.R.layout
-import com.fernandocejas.sample.core.extension.inTransaction
-import kotlinx.android.synthetic.main.toolbar.toolbar
+import androidx.appcompat.app.AppCompatActivity
 
 /**
  * Base Activity class with helper methods for handling fragment transactions and back button
@@ -30,22 +25,33 @@ import kotlinx.android.synthetic.main.toolbar.toolbar
  */
 abstract class BaseActivity : AppCompatActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(layout.activity_layout)
-        setSupportActionBar(toolbar)
-        addFragment(savedInstanceState)
-    }
+//    private lateinit var binding: ActivityLayoutBinding
+//
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//
+//        binding = ActivityLayoutBinding.inflate(layoutInflater)
+//
+//        setContentView(binding.root)
+//        setSupportActionBar(binding.toolBarContainer.toolbar)
+//        addFragment(savedInstanceState)
+//    }
+//
+//    @Deprecated("Deprecated in Java")
+//    override fun onBackPressed() {
+//        (supportFragmentManager.findFragmentById(binding.fragmentContainer.id) as BaseFragment).onBackPressed()
+//        super.onBackPressed()
+//    }
+//
+//    fun toolbar() = binding.toolBarContainer.toolbar
+//
+//    fun fragmentContainer() = binding.fragmentContainer
+//    fun progressBar() = binding.toolBarContainer.progress
+//
+//    private fun addFragment(savedInstanceState: Bundle?) =
+//        savedInstanceState ?: supportFragmentManager.inTransaction {
+//            add(binding.fragmentContainer.id, fragment())
+//        }
 
-    override fun onBackPressed() {
-        (supportFragmentManager.findFragmentById(
-                id.fragmentContainer) as BaseFragment).onBackPressed()
-        super.onBackPressed()
-    }
-
-    private fun addFragment(savedInstanceState: Bundle?) =
-            savedInstanceState ?: supportFragmentManager.inTransaction { add(
-                    id.fragmentContainer, fragment()) }
-
-    abstract fun fragment(): BaseFragment
+//    abstract fun fragment(): BaseFragment
 }

@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2018 Fernando Cejas Open Source Project
+ * Copyright (C) 2020 Fernando Cejas Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,42 +16,45 @@
 package com.fernandocejas.sample.core.navigation
 
 import com.fernandocejas.sample.AndroidTest
-import com.fernandocejas.sample.features.login.Authenticator
-import com.fernandocejas.sample.features.login.LoginActivity
-import com.fernandocejas.sample.features.movies.MoviesActivity
-import com.fernandocejas.sample.shouldNavigateTo
-import com.nhaarman.mockito_kotlin.whenever
+import com.fernandocejas.sample.features.auth.credentials.Authenticator
+import com.fernandocejas.sample.features.login.ui.LoginActivity
+import com.fernandocejas.sample.features.movies.ui.MoviesActivity
+import com.fernandocejas.sample.matchers.shouldNavigateTo
+import io.mockk.every
+import io.mockk.impl.annotations.MockK
+import io.mockk.verify
 import org.junit.Before
 import org.junit.Test
-import org.mockito.Mock
-import org.mockito.Mockito.verify
-
 
 class NavigatorTest : AndroidTest() {
 
     private lateinit var navigator: Navigator
 
-    @Mock private lateinit var authenticator: Authenticator
+    @MockK
+    private lateinit var authenticator: Authenticator
 
-    @Before fun setup() {
+    @Before
+    fun setup() {
         navigator = Navigator(authenticator)
     }
 
-    @Test fun `should forward user to login screen`() {
-        whenever(authenticator.userLoggedIn()).thenReturn(false)
+    @Test
+    fun `should forward user to login screen`() {
+        every { authenticator.userLoggedIn() } returns false
 
-        navigator.showMain(activityContext())
+        navigator.showMain(context())
 
-        verify(authenticator).userLoggedIn()
+        verify(exactly = 1) { authenticator.userLoggedIn() }
         RouteActivity::class shouldNavigateTo LoginActivity::class
     }
 
-    @Test fun `should forward user to movies screen`() {
-        whenever(authenticator.userLoggedIn()).thenReturn(true)
+    @Test
+    fun `should forward user to movies screen`() {
+        every { authenticator.userLoggedIn() } returns true
 
-        navigator.showMain(activityContext())
+        navigator.showMain(context())
 
-        verify(authenticator).userLoggedIn()
+        verify(exactly = 1) { authenticator.userLoggedIn() }
         RouteActivity::class shouldNavigateTo MoviesActivity::class
     }
 }

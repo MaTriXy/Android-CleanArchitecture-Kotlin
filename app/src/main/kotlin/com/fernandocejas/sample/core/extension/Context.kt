@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2018 Fernando Cejas Open Source Project
+ * Copyright (C) 2020 Fernando Cejas Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@ package com.fernandocejas.sample.core.extension
 
 import android.content.Context
 import android.net.ConnectivityManager
-import android.net.NetworkInfo
 
-val Context.networkInfo: NetworkInfo? get() =
-    (this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo
+val Context.connectivityManager: ConnectivityManager
+    get() =
+        this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.fernandocejas.sample"
-xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
 <!--Permissions-->
 <uses-permission android:name="android.permission.INTERNET" />
@@ -19,7 +18,8 @@ xmlns:android="http://schemas.android.com/apk/res/android">
     <activity
         android:name="com.fernandocejas.sample.core.navigation.RouteActivity"
         android:noHistory="true"
-        android:theme="@style/AppTheme.Translucent">
+        android:theme="@style/AppTheme.Translucent"
+        android:exported="true">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />
@@ -27,17 +27,17 @@ xmlns:android="http://schemas.android.com/apk/res/android">
     </activity>
 
     <activity
-        android:name=".features.login.LoginActivity"
+        android:name=".features.login.ui.LoginActivity"
         android:label="@string/login_screen_title">
     </activity>
 
     <activity
-        android:name=".features.movies.MoviesActivity"
+        android:name=".features.movies.ui.MoviesActivity"
         android:label="@string/movies_screen_title">
     </activity>
 
     <activity
-        android:name=".features.movies.MovieDetailsActivity"
+        android:name=".features.movies.ui.MovieDetailsActivity"
         android:label="@string/movie_details_screen_title"
         android:theme="@style/AppTheme.Translucent">
     </activity>

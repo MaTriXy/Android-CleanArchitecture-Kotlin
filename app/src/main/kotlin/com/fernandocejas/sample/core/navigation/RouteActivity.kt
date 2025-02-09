@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2018 Fernando Cejas Open Source Project
+ * Copyright (C) 2020 Fernando Cejas Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,22 +16,15 @@
 package com.fernandocejas.sample.core.navigation
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import com.fernandocejas.sample.AndroidApplication
-import com.fernandocejas.sample.core.di.ApplicationComponent
-import javax.inject.Inject
+import androidx.appcompat.app.AppCompatActivity
+import org.koin.android.ext.android.inject
 
 class RouteActivity : AppCompatActivity() {
 
-    private val appComponent: ApplicationComponent by lazy(mode = LazyThreadSafetyMode.NONE) {
-        (application as AndroidApplication).appComponent
-    }
-
-    @Inject internal lateinit var navigator: Navigator
+    private val navigator: Navigator by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        appComponent.inject(this)
         navigator.showMain(this)
     }
 }

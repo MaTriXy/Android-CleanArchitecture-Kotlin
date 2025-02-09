@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2018 Fernando Cejas Open Source Project
+ * Copyright (C) 2020 Fernando Cejas Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,37 +15,22 @@
  */
 package com.fernandocejas.sample.core.interactor
 
-import com.fernandocejas.sample.AndroidTest
-import com.fernandocejas.sample.core.exception.Failure
-import com.fernandocejas.sample.core.functional.Either
+import com.fernandocejas.sample.UnitTest
 import com.fernandocejas.sample.core.functional.Either.Right
-import kotlinx.coroutines.experimental.runBlocking
-import org.amshove.kluent.shouldEqual
-import org.junit.Test
+import io.kotest.matchers.equals.shouldBeEqual
+import kotlinx.coroutines.runBlocking
+import org.junit.jupiter.api.Test
 
-class UseCaseTest : AndroidTest() {
-
-    private val TYPE_TEST = "Test"
-    private val TYPE_PARAM = "ParamTest"
+class UseCaseTest : UnitTest() {
 
     private val useCase = MyUseCase()
 
-    @Test fun `running use case should return 'Either' of use case type`() {
+    @Test
+    fun `running use case should return 'Either' of use case type`() {
         val params = MyParams(TYPE_PARAM)
         val result = runBlocking { useCase.run(params) }
 
-        result shouldEqual Right(MyType(TYPE_TEST))
-    }
-
-    @Test fun `should return correct data when executing use case`() {
-        var result: Either<Failure, MyType>? = null
-
-        val params = MyParams("TestParam")
-        val onResult = { myResult: Either<Failure, MyType> -> result = myResult }
-
-        runBlocking { useCase(params, onResult) }
-
-        result shouldEqual Right(MyType(TYPE_TEST))
+        result shouldBeEqual Right(MyType(TYPE_TEST))
     }
 
     data class MyType(val name: String)
@@ -53,5 +38,10 @@ class UseCaseTest : AndroidTest() {
 
     private inner class MyUseCase : UseCase<MyType, MyParams>() {
         override suspend fun run(params: MyParams) = Right(MyType(TYPE_TEST))
+    }
+
+    companion object {
+        private const val TYPE_TEST = "Test"
+        private const val TYPE_PARAM = "ParamTest"
     }
 }

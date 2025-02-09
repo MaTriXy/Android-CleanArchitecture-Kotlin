@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2018 Fernando Cejas Open Source Project
+ * Copyright (C) 2020 Fernando Cejas Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,25 +15,27 @@
  */
 package com.fernandocejas.sample.core.platform
 
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.MutableLiveData
 import com.fernandocejas.sample.AndroidTest
-import com.fernandocejas.sample.core.exception.Failure
-import com.fernandocejas.sample.core.exception.Failure.NetworkConnection
-import org.amshove.kluent.shouldBeInstanceOf
+import com.fernandocejas.sample.core.failure.Failure
+import com.fernandocejas.sample.core.failure.Failure.NetworkConnection
+import io.kotest.matchers.should
+import io.kotest.matchers.types.beInstanceOf
 import org.junit.Test
 
 class BaseViewModelTest : AndroidTest() {
 
-    @Test fun `should handle failure by updating live data`() {
+    @Test
+    fun `should handle failure by updating live data`() {
         val viewModel = MyViewModel()
 
-        viewModel.handleError(NetworkConnection())
+        viewModel.handleError(NetworkConnection)
 
         val failure = viewModel.failure
         val error = viewModel.failure.value
 
-        failure shouldBeInstanceOf MutableLiveData::class.java
-        error shouldBeInstanceOf NetworkConnection::class.java
+        failure should beInstanceOf<MutableLiveData<Failure>>()
+        error should beInstanceOf<NetworkConnection>()
     }
 
     private class MyViewModel : BaseViewModel() {

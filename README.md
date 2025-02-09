@@ -1,7 +1,18 @@
 ![banner](https://user-images.githubusercontent.com/37318022/40349145-3e0c8d8a-5dd8-11e8-8654-5784f9ab7554.png)
 
-# Android - Clean Architecture - Kotlin [![Build Status](https://travis-ci.org/android10/Android-CleanArchitecture-Kotlin.svg?branch=master)](https://travis-ci.org/android10/Android-CleanArchitecture-Kotlin)
-The purpose of this repo is to follow up Clean Architecture principles by bringing them to Android. It is worth saying that the idea is to take advantage of the Kotlin Programming Language features plus also pull in lessons learned and ideas from other interesting aproaches like Functional Programming.
+# STATUS: Refactoring! Please check the TODOs below in the **project status section**.
+
+# Android - Clean Architecture - Kotlin [![Build Status](https://travis-ci.org/android10/Android-CleanArchitecture-Kotlin.svg?branch=main)](https://travis-ci.org/android10/Android-CleanArchitecture-Kotlin) [![codecov](https://codecov.io/gh/android10/Android-CleanArchitecture-Kotlin/branch/main/graph/badge.svg?token=x1AtDcNuDv)](https://codecov.io/gh/android10/Android-CleanArchitecture-Kotlin)
+The purpose of this repo is to follow up Clean Architecture principles by bringing them to Android. It is worth saying that the idea is to take advantage of the Kotlin Programming Language features plus also pull in lessons learned and ideas from other interesting approaches like Functional Programming.
+
+## Project Status
+
+ - **Last Update: 2024.08**
+   - WIP: Migrate to Kotlin 2.0.
+   - WIP: Migrate to Jetpack Compose.
+   - TODO: Bug Fixes.
+   - TODO: Reorganize and cleanup tests.
+   - TODO: Reorganize dependencies and build system. 
 
 ## Blog post with implementation details explanation:
 [Architecting Android… Reloaded](https://fernandocejas.com/2018/05/07/architecting-android-reloaded/)
@@ -50,19 +61,19 @@ Article, lessons learned and some more material coming up. Check the following k
 ## Local Development
 Here are some useful Gradle/adb commands for executing this example:
 
- * `./gradlew deployDebug` - Builds and install the debug apk on the current connected device.
- * `./gradlew runUnitTests` - Execute all unit tests (both unit and integration).
+ * `./gradlew runApp` - Builds and install the debug apk on the current connected device.
+ * `./gradlew compileApp` - Builds the debug apk.
+ * `./gradlew runUnitTests` - Execute unit tests (both unit and integration).
+ * `./gradlew runAcceptanceTests` - Execute acceptance and instrumentation tests in the connected device.
+ * `./gradlew runTestCoverage` - Reports code coverage on tests within the Android codebase.
+ * `./gradlew runStaticCodeAnalysis` - Run static analysis on the Android codebase.
  
 ## Discussions
 Refer to the issues section: https://github.com/android10/Android-CleanArchitecture-Kotlin/issues
  
-## Code style
-Here you can download and install the java codestyle.
-https://github.com/android10/java-code-styles
-
 ## License
 
-    Copyright 2018 Fernando Cejas
+    Copyright 2024 Fernando Cejas
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -77,6 +88,6 @@ https://github.com/android10/java-code-styles
     limitations under the License.
 
 
-![http://www.fernandocejas.com](https://github.com/android10/Sample-Data/blob/master/android10/android10_logo_big.png)
+![https://fernandocejas.com](https://github.com/android10/Sample-Data/blob/master/android10/android10_logo_big.png)
 
 <a href="https://www.buymeacoffee.com/android10" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>

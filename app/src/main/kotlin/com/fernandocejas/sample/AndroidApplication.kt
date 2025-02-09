@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2018 Fernando Cejas Open Source Project
+ * Copyright (C) 2020 Fernando Cejas Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,29 +16,26 @@
 package com.fernandocejas.sample
 
 import android.app.Application
-import com.fernandocejas.sample.core.di.ApplicationComponent
-import com.fernandocejas.sample.core.di.ApplicationModule
-import com.fernandocejas.sample.core.di.DaggerApplicationComponent
-import com.squareup.leakcanary.LeakCanary
+import com.fernandocejas.sample.core.allFeatures
+import com.fernandocejas.sample.core.di.coreModule
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.GlobalContext.startKoin
 
 class AndroidApplication : Application() {
-
-    val appComponent: ApplicationComponent by lazy(mode = LazyThreadSafetyMode.NONE) {
-        DaggerApplicationComponent
-                .builder()
-                .applicationModule(ApplicationModule(this))
-                .build()
-    }
-
     override fun onCreate() {
         super.onCreate()
-        this.injectMembers()
-        this.initializeLeakDetection()
-    }
 
-    private fun injectMembers() = appComponent.inject(this)
-
-    private fun initializeLeakDetection() {
-        if (BuildConfig.DEBUG) LeakCanary.install(this)
+        /**
+         * Dependency Injection Initialization via Koin.
+         *
+         * @see [https://insert-koin.io/docs/setup/koin]
+         * @see [https://insert-koin.io/docs/reference/koin-android/start/]
+         */
+        startKoin {
+            androidContext(this@AndroidApplication)
+            androidLogger()
+            modules(allFeatures().map { it.diModule() })
+        }
     }
 }
